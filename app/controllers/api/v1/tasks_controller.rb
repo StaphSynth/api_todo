@@ -1,6 +1,4 @@
 class Api::V1::TasksController < Api::V1::BaseController
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-
   def index
     respond_with Task.all
   end
