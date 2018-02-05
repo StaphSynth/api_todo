@@ -20,7 +20,7 @@ export default class Tasks extends React.Component {
     let taskList = [];
 
     tasks.forEach(task => {
-      taskList.push(<li>{ task.item }</li>);
+      taskList.push(<li>{ task.text }</li>);
     });
 
     return(
