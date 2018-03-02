@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Task from './Task';
 
 export default class Tasks extends React.Component {
   constructor(props) {
@@ -19,8 +20,8 @@ export default class Tasks extends React.Component {
     const tasks = this.state.tasks;
     let taskList = [];
 
-    tasks.forEach(task => {
-      taskList.push(<li>{ task.text }</li>);
+    tasks.forEach((task, i) => {
+      taskList.push(<li key={ i }>{ Task(task) }</li>);
     });
 
     return(
@@ -41,12 +42,4 @@ export default class Tasks extends React.Component {
       </div>
     );
   }
-}
-
-const Task = (props) => {
-  return(
-    <div>
-      { props.item }
-    </div>
-  );
 }
