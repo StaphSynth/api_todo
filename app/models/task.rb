@@ -1,10 +1,8 @@
 class Task < ApplicationRecord
-  module States
-    PRIORITIES = %w(low normal high)
-  end
+  PRIORITIES = %w(low normal high).freeze
 
   validates :text, presence: true
-  validates_inclusion_of :priority, in: Task::States::PRIORITIES
+  validates_inclusion_of :priority, in: PRIORITIES
 
   def complete?
     complete
