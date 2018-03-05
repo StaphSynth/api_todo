@@ -224,7 +224,7 @@ DEPENDENCIES
   active_model_serializers
   byebug
   coffee-rails (~> 4.2)
-  factory_bot_rails
+  factory_bot_rails (~> 4.0)
   faker
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
@@ -235,7 +235,7 @@ DEPENDENCIES
   rails (~> 5.1.4)
   react_on_rails
   responders
-  rspec-rails
+  rspec-rails (~> 3.6)
   sass-rails (~> 5.0)
   spring
   spring-watcher-listen (~> 2.0.0)

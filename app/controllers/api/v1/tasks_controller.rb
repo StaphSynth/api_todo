@@ -1,6 +1,6 @@
 class Api::V1::TasksController < Api::V1::BaseController
   def index
-    respond_with Task.all
+    render json: Task.all
   end
 
   def show
@@ -8,7 +8,13 @@ class Api::V1::TasksController < Api::V1::BaseController
   end
 
   def create
-    render json: Task.create(task_params[:_json])
+    @task = Task.new(task_params[:_json])
+
+    if task.save
+      render json: task
+    else
+      render json: { status: 'error', message: task.errors }, status: :not_acceptable
+    end
   end
 
   def destroy
@@ -33,7 +39,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   end
 
   def record_not_found
-    payload = { status: 404, message: 'record not found' }
+    payload = { status: 'error', message: 'record not found' }
     respond_with payload, status: :not_found
   end
 end
