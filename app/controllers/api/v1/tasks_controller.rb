@@ -8,7 +8,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   end
 
   def create
-    render json: Task.create(task_params[:_json]).to_json
+    render json: Task.create(task_params[:_json])
   end
 
   def destroy
@@ -26,7 +26,10 @@ class Api::V1::TasksController < Api::V1::BaseController
   end
 
   def task_params
-    params.permit(:id, _json: [:text, :complete, :priority])
+    params.permit(
+      :format, :id, :text, :complete, :priority,
+      _json: [:text, :complete, :priority]
+    )
   end
 
   def record_not_found
