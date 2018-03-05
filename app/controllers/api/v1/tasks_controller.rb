@@ -8,7 +8,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   end
 
   def create
-    respond_with :api, :v1, Task.create(task_params)
+    render json: Task.create(task_params[:_json]).to_json
   end
 
   def destroy
@@ -16,7 +16,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   end
 
   def update
-    respond_with task.update_attributes(task_params)
+    respond_with task.update_attributes(task_params[:_json])
   end
 
   private
@@ -26,7 +26,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   end
 
   def task_params
-    params.permit(:id, :item, :complete, :priority)
+    params.permit(:id, _json: [:text, :complete, :priority])
   end
 
   def record_not_found
