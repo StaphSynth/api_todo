@@ -4,7 +4,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   end
 
   def show
-    respond_with task
+    render json: task
   end
 
   def create
@@ -13,7 +13,7 @@ class Api::V1::TasksController < Api::V1::BaseController
     if task.save
       render json: task
     else
-      render json: jsonify_errors, status: :not_acceptable
+      handle_mutating_errors
     end
   end
 
@@ -21,12 +21,16 @@ class Api::V1::TasksController < Api::V1::BaseController
     if task.destroy
       render json: { status: 'success' }
     else
-      render json: jsonify_errors, status: :internal_server_error
+      handle_mutating_errors
     end
   end
 
   def update
-    respond_with task.update_attributes(task_params[:_json])
+    if task.update_attributes(task_params)
+      render json: { status: 'success' }
+    else
+      handle_mutating_errors
+    end
   end
 
   private
@@ -42,12 +46,15 @@ class Api::V1::TasksController < Api::V1::BaseController
     )
   end
 
-  def jsonify_errors
-    { status: 'error', message: task.errors }
+  def error_payload
+    {}.tap do |hash|
+      hash[:status] = 'error'
+      hash[:message] = task.errors if task.errors.any?
+    end
   end
 
-  def record_not_found
-    payload = { status: 'error', message: 'record not found' }
-    respond_with payload, status: :not_found
+  def handle_mutating_errors
+    status = task.errors.any? ? :not_acceptable : :internal_server_error
+    render json: error_payload, status: status
   end
 end
