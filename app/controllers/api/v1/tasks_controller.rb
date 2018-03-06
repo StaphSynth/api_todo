@@ -13,12 +13,16 @@ class Api::V1::TasksController < Api::V1::BaseController
     if task.save
       render json: task
     else
-      render json: { status: 'error', message: task.errors }, status: :not_acceptable
+      render json: jsonify_errors, status: :not_acceptable
     end
   end
 
   def destroy
-    respond_with task.destroy
+    if task.destroy
+      render json: { status: 'success' }
+    else
+      render json: jsonify_errors, status: :internal_server_error
+    end
   end
 
   def update
@@ -36,6 +40,10 @@ class Api::V1::TasksController < Api::V1::BaseController
       :format, :id, :text, :complete, :priority,
       _json: [:text, :complete, :priority]
     )
+  end
+
+  def jsonify_errors
+    { status: 'error', message: task.errors }
   end
 
   def record_not_found

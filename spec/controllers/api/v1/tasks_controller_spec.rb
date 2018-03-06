@@ -41,13 +41,39 @@ describe Api::V1::TasksController, type: :controller do
 
       it 'handles the error' do
         subject
-        expect(response).not_to be_successful
+        expect(response.status).to eq(406)
+        expect(JSON.parse(response.body).fetch('status')).to eq('error')
       end
 
       it 'provides the reasons it was unable to save' do
         subject
         errors = JSON.parse(response.body).fetch('message')
         expect(errors).to be_a(Hash)
+      end
+    end
+  end
+
+  describe '#destroy' do
+    let(:task) { Task.first }
+    subject { delete :destroy, params: { id: task.id } }
+
+    context 'the happy path' do
+      it 'successfully destroys the task' do
+        total_tasks = Task.count
+        subject
+        expect(Task.count).to eq(total_tasks - 1)
+      end
+    end
+
+    context 'on failure to destroy' do
+      it 'correctly handles the error' do
+        allow(Task).to receive(:find).and_return(task)
+        allow(task).to receive(:errors).and_return({})
+        allow(task).to receive(:destroy).and_return(false)
+
+        subject
+        expect(response.status).to eq(500)
+        expect(JSON.parse(response.body).fetch('status')).to eq('error')
       end
     end
   end
