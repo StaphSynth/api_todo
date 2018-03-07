@@ -41,7 +41,7 @@ class Api::V1::TasksController < Api::V1::BaseController
 
   def task_params
     params.permit(
-      :format, :id, :text, :complete, :priority,
+      :id, :text, :complete, :priority,
       _json: [:text, :complete, :priority]
     )
   end
