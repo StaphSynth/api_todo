@@ -15,7 +15,8 @@ gem 'responders'
 gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
-gem 'react_on_rails'
+gem 'react_on_rails', '~> 10.1.3'
+gem 'webpacker', '~> 3.0'
 gem 'active_model_serializers'
 
 group :development, :test do
@@ -41,4 +42,3 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'mini_racer', platforms: :ruby
-gem 'webpacker_lite'
