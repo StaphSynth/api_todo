@@ -1,9 +1,0 @@
-{
-  "scripts": {
-    "postinstall": "cd client && yarn install"
-  },
-
-  "name": "api_todo",
-  "private": true,
-  "dependencies": {}
-}
