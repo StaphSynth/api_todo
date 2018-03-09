@@ -16,7 +16,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'active_model_serializers'
-gem 'react_on_rails', '10.0.0'
+gem 'react_on_rails', '10.1.3'
 gem 'webpacker', '~> 3.0'
 
 group :development, :test do
