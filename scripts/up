@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+bundle install && yarn && rake db:schema:load && rake db:seed
